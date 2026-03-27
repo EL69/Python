@@ -1,5 +1,6 @@
 # Project Noughts and Crosses
 # square designations / variables
+# Initialize squares
 s1 = '1'
 s2 = '2'
 s3 = '3'
@@ -10,61 +11,17 @@ s7 = '7'
 s8 = '8'
 s9 = '9'
 
+def print_board():
+    print(f"|__{s1}__|__{s2}__|__{s3}__|")
+    print(f"|__{s4}__|__{s5}__|__{s6}__|")
+    print(f"|__{s7}__|__{s8}__|__{s9}__|")
+    print()
+
 while True:
-    print(f"|__{s1}__|__{s2}__|__{s3}__|")
-    print(f"|__{s4}__|__{s5}__|__{s6}__|")
-    print(f"|  {s7}  |  {s8}  |  {s9}  |")
-    print()
+    print_board()
 
+    # Player move
     move = input('What is your move: ')
-
-    if move == '1':
-        s1 = 'x'
-    if move == '2':
-        s2 = 'x'
-    if move == '3':
-        s3 = 'x'
-    if move == '4':
-        s4 = 'x'
-    if move == '5':
-        s5 = 'x'
-    if move == '6':
-        s6 = 'x'
-    if move == '7':
-        s7 = 'x'
-    if move == '8':
-        s8 = 'x'
-    if move == '9':
-        s9 = 'x'
-
-    # Computer move (simple: first available square)
-
-    if s1 not in ['x', '0']:
-        s1 = '0'
-    elif s2 not in ['x', '0']:
-        s2 = '0'
-    elif s3 not in ['x', '0']:
-        s3 = '0'
-    elif s4 not in ['x', '0']:
-        s4 = '0'
-    elif s5 not in ['x', '0']:
-        s5 = '0'
-    elif s6 not in ['x', '0']:
-        s6 = '0'
-    elif s7 not in ['x', '0']:
-        s7 = '0'
-    elif s8 not in ['x', '0']:
-        s8 = '0'
-    elif s9 not in ['x', '0']:
-        s9 = '0'
-
-    # After computer move logic
-    print(f"|__{s1}__|__{s2}__|__{s3}__|")
-    print(f"|__{s4}__|__{s5}__|__{s6}__|")
-    print(f"|  {s7}  |  {s8}  |  {s9}  |")
-    print()
-
-
     if move == '1' and s1 not in ['x', '0']:
         s1 = 'x'
     elif move == '2' and s2 not in ['x', '0']:
@@ -85,11 +42,30 @@ while True:
         s9 = 'x'
     else:
         print("That square is already taken. Try again.")
+        continue
 
-    continue  # Go to the next loop iteration
+    # Check for player win/draw
+    
+    wins = [
+    [s1, s2, s3],
+    [s4, s5, s6],
+    [s7, s8, s9],
+    [s1, s4, s7],
+    [s2, s5, s8],
+    [s3, s6, s9],
+    [s1, s5, s9],
+    [s3, s5, s7]
+]
 
+    for combo in wins:
+        if combo == ['x', 'x', 'x']:
+            print("Player wins!")
+            break
 
+        if combo == ['0', '0', '0']:
+            print("Computer wins!")
+            break
 
-        # Set the correct variable to '0'
-        # (You need to check which variable it is and update it)
-    break
+        if all(square in ['x', '0'] for square in [s1, s2, s3, s4, s5, s6, s7, s8, s9]):
+            print("Draw!")
+            break
